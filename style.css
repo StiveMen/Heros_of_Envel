@@ -30,3 +30,7 @@ kbd{font:10px 'Press Start 2P',monospace;color:#eaf6ff;background:linear-gradien
 footer{text-align:center;color:#56668e;font-size:11px;margin-top:23px}
 @media(max-width:720px){.page{width:calc(100% - 18px);padding-top:20px}.brand{gap:10px}.brand-mark{width:39px;height:39px;font-size:22px}.status{display:none}.screen-top,.screen-bottom{font-size:6px}.screen-top span:last-child,.screen-bottom span:last-child{display:none}.below{grid-template-columns:1fr}.controls{justify-content:flex-start}.control span{font-size:7px}.objective{padding:12px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+.touch-controls{display:none;gap:8px;justify-content:center;padding:12px 4px 3px}
+.touch-controls button{font:18px monospace;color:#eaf6ff;background:linear-gradient(#2a3c67,#182341);border:1px solid #526b9b;border-bottom-width:3px;border-radius:6px;min-width:52px;min-height:42px;touch-action:none;user-select:none}
+.touch-controls button:active,.touch-controls button.pressed{background:#2c5c88;color:var(--cyan);transform:translateY(1px);border-bottom-width:2px}
+@media(max-width:720px),(pointer:coarse){.touch-controls{display:flex}}
