@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{color-scheme:dark;--bg:#090d1d;--panel:#111832;--line:#28345b;--cyan:#66f3ff;--violet:#9d78ff;--text:#eef4ff;--muted:#8b9ac3}
+*{box-sizing:border-box}
+html{min-height:100%;background:var(--bg)}
+body{margin:0;min-height:100vh;color:var(--text);font-family:Manrope,system-ui,sans-serif;background:radial-gradient(ellipse at 50% -10%,#202b58 0%,#10162f 35%,#090d1d 72%)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.17;background-image:linear-gradient(#56699a22 1px,transparent 1px),linear-gradient(90deg,#56699a22 1px,transparent 1px);background-size:32px 32px;mask-image:linear-gradient(to bottom,black,transparent 80%)}
+.page{width:min(1100px,calc(100% - 32px));margin:0 auto;padding:34px 0 22px;position:relative}
+.brand{display:flex;align-items:center;gap:15px;margin:0 0 24px}
+.brand-mark{display:grid;place-items:center;width:50px;height:50px;color:var(--cyan);font-size:28px;background:linear-gradient(145deg,#263d6b,#171c3b);border:1px solid #52649b;box-shadow:0 0 28px #3ce9ff22,inset 0 0 18px #7d8dff1c;clip-path:polygon(50% 0,90% 20%,100% 50%,80% 88%,50% 100%,12% 82%,0 50%,18% 12%)}
+.eyebrow{font:9px 'Press Start 2P',monospace;color:var(--cyan);letter-spacing:1.6px;margin:0 0 8px}
+h1{font-size:clamp(18px,3vw,28px);letter-spacing:-.8px;margin:0;font-weight:800}
+h1 span{color:#9aa9d1;font-weight:500}
+.status{margin-left:auto;border:1px solid #30436c;background:#121b36;color:#a8b7dc;border-radius:5px;padding:9px 12px;font:9px 'Press Start 2P',monospace;white-space:nowrap}
+.status-dot{display:inline-block;width:7px;height:7px;background:#67f2ba;border-radius:50%;box-shadow:0 0 10px #67f2ba;margin-right:8px}
+.game-shell{border:1px solid #3a4d7c;background:#0c1228;padding:10px;border-radius:9px;box-shadow:0 22px 80px #0008,0 0 0 4px #151d3a,0 0 45px #4b72ff18}
+.screen-top,.screen-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#8495c1;font:8px 'Press Start 2P',monospace;letter-spacing:.3px;padding:8px 5px 11px}
+.screen-top i{display:inline-block;width:6px;height:6px;background:var(--cyan);box-shadow:0 0 8px var(--cyan);margin-right:7px}
+.screen-bottom{padding:11px 5px 3px;font-size:7px}
+.canvas-wrap{position:relative;background:#0b1026;border:1px solid #28365e;overflow:hidden;line-height:0}
+canvas{display:block;width:100%;height:auto;image-rendering:pixelated;image-rendering:crisp-edges;aspect-ratio:16/9;outline:none}
+.scanlines{position:absolute;inset:0;pointer-events:none;opacity:.12;background:repeating-linear-gradient(to bottom,transparent 0,transparent 3px,#050816 4px);mix-blend-mode:multiply}
+.below{display:grid;grid-template-columns:minmax(220px,.8fr) 2fr;gap:14px;margin-top:16px}
+.objective{display:flex;align-items:center;gap:13px;background:linear-gradient(135deg,#172345,#11182f);border:1px solid #29385f;padding:17px;border-radius:7px}
+.objective-icon{font-size:30px;color:var(--cyan);text-shadow:0 0 18px #66f3ff88}
+.objective b{font-size:13px}.objective p{font-size:12px;line-height:1.5;color:#a3b0d0;margin:5px 0 0}
+.controls{display:flex;justify-content:space-around;align-items:center;gap:12px;flex-wrap:wrap;background:#0e142b;border:1px solid #222f51;padding:12px;border-radius:7px}
+.control{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.control span{font:8px 'Press Start 2P',monospace;color:#8b9bc3;margin-left:5px}
+kbd{font:10px 'Press Start 2P',monospace;color:#eaf6ff;background:linear-gradient(#2a365b,#19213e);border:1px solid #4a5c88;border-bottom-width:3px;border-radius:4px;padding:8px 7px;min-width:29px;text-align:center}
+footer{text-align:center;color:#56668e;font-size:11px;margin-top:23px}
+@media(max-width:720px){.page{width:calc(100% - 18px);padding-top:20px}.brand{gap:10px}.brand-mark{width:39px;height:39px;font-size:22px}.status{display:none}.screen-top,.screen-bottom{font-size:6px}.screen-top span:last-child,.screen-bottom span:last-child{display:none}.below{grid-template-columns:1fr}.controls{justify-content:flex-start}.control span{font-size:7px}.objective{padding:12px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
