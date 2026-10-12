@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10152e">
+  <meta name="description" content="Герои Энвелла: Разлом — пиксельный браузерный платформер о магии, кристаллах и порталах.">
+  <title>Герои Энвелла: Разлом</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="page">
+    <header class="brand">
+      <div class="brand-mark" aria-hidden="true">✦</div>
+      <div><p class="eyebrow">ПИКСЕЛЬНОЕ ПРИКЛЮЧЕНИЕ</p><h1>Герои Энвелла <span>· Разлом</span></h1></div>
+      <div class="status"><span class="status-dot"></span> БРАУЗЕРНАЯ ВЕРСИЯ</div>
+    </header>
+    <section class="game-shell" aria-label="Игровое поле">
+      <div class="screen-top"><span><i></i> ENVEL // REALM 01</span><span id="top-status">СИГНАЛ ПОРТАЛА: СТАБИЛЕН</span></div>
+      <div class="canvas-wrap">
+        <canvas id="game" width="480" height="270" aria-label="Игра Герои Энвелла: Разлом"></canvas>
+        <div class="scanlines" aria-hidden="true"></div>
+      </div>
+      <div class="screen-bottom"><span>PIXEL ENGINE v1.0</span><span id="hint">Собери кристаллы. Найди портал.</span><span>60 FPS TARGET</span></div>
+    </section>
+    <section class="below">
+      <div class="objective"><span class="objective-icon">◇</span><div><b>Цель миссии</b><p>Собери минимум 5 кристаллов и доберись до портала в конце уровня.</p></div></div>
+      <div class="controls">
+        <div class="control"><kbd>A</kbd><kbd>D</kbd><span>ДВИЖЕНИЕ</span></div>
+        <div class="control"><kbd>←</kbd><kbd>→</kbd><span>ДВИЖЕНИЕ</span></div>
+        <div class="control"><kbd>SPACE</kbd><span>ПРЫЖОК</span></div>
+        <div class="control"><kbd>J</kbd><span>МАГИЯ</span></div>
+        <div class="control"><kbd>ESC</kbd><span>ПАУЗА</span></div>
+      </div>
+    </section>
+    <footer>Фанатская мини-игра с оригинальной пиксельной графикой · Сделано для браузера</footer>
+  </main>
+  <script src="game.js"></script>
+</body>
+</html>
