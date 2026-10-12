@@ -31,25 +31,54 @@ def text(s, x, y, font=FONT, color=WHITE, center=False):
     screen.blit(surf, rect)
 
 def draw_background(camera):
-    screen.fill(SKY)
-    pygame.draw.circle(screen, (92, 110, 183), (770, 100), 42)
-    pygame.draw.circle(screen, (15, 20, 49), (786, 87), 38)
+    # Deep twilight gradient with distant layers for a richer fantasy atmosphere.
+    for y in range(H):
+        t = y / H
+        col = (int(12 + 14*t), int(17 + 15*t), int(43 + 27*t))
+        pygame.draw.line(screen, col, (0, y), (W, y))
+    tick = pygame.time.get_ticks()
+    # Moon and soft halo
+    pygame.draw.circle(screen, (35, 57, 111), (770, 100), 61)
+    pygame.draw.circle(screen, (92, 125, 198), (770, 100), 43)
+    pygame.draw.circle(screen, (199, 221, 255), (770, 100), 31)
+    pygame.draw.circle(screen, (222, 234, 255), (759, 91), 7)
+    # Far mountains
+    for i in range(8):
+        x = int((i * 175 - camera * 0.12) % (W + 240)) - 120
+        base = 430 + (i % 3) * 25
+        pygame.draw.polygon(screen, (24, 34, 76), [(x-100,base),(x,base-135-(i%2)*35),(x+100,base)])
+        pygame.draw.polygon(screen, (42, 58, 111), [(x,base-135-(i%2)*35),(x+35,base-80),(x+100,base)])
+    # Floating rune-like shards
     for i in range(9):
         x = int((i * 155 - camera * 0.22) % (W + 180)) - 90
-        y = 130 + (i % 3) * 48
-        pygame.draw.polygon(screen, (31, 42, 83), [(x-55,y),(x+45,y),(x+20,y+22),(x-20,y+30)])
-        pygame.draw.polygon(screen, (50, 65, 117), [(x-20,y+30),(x+20,y+22),(x+3,y+65)])
-    for i in range(45):
+        y = 150 + (i % 3) * 48
+        pygame.draw.polygon(screen, (35, 51, 98), [(x-35,y),(x+25,y-8),(x+20,y+15),(x-20,y+28)])
+        pygame.draw.polygon(screen, (55, 81, 139), [(x-20,y+28),(x+20,y+15),(x+3,y+55)])
+    # Twinkling stars
+    for i in range(58):
         x = (i * 197 + 43) % W
-        y = (i * 73 + 21) % 310
-        pygame.draw.circle(screen, (115, 148, 224), (x, y), 1 + (i % 2))
+        y = (i * 73 + 21) % 330
+        pulse = 1 if (i + tick // 350) % 4 else 2
+        color = (105, 151, 226) if i % 3 else (177, 221, 255)
+        pygame.draw.circle(screen, color, (x, y), pulse)
+    # Atmospheric glow near the horizon
+    pygame.draw.rect(screen, (21, 37, 72), (0, 475, W, 125))
 
 def draw_platform(rect, camera):
     r = pygame.Rect(rect.x-camera, rect.y, rect.w, rect.h)
-    pygame.draw.rect(screen, (42, 58, 91), r, border_radius=5)
-    pygame.draw.rect(screen, (77, 179, 192), (r.x, r.y, r.w, 7), border_radius=3)
-    for x in range(r.x+12, r.right-4, 28):
-        pygame.draw.line(screen, (56, 82, 119), (x, r.y+13), (x+9, r.bottom-3), 2)
+    if r.right < -5 or r.left > W+5:
+        return
+    # Shadow, stone body, glowing magical rim
+    shadow = r.move(0, 6)
+    pygame.draw.rect(screen, (7, 11, 29), shadow, border_radius=7)
+    pygame.draw.rect(screen, (31, 43, 76), r, border_radius=7)
+    pygame.draw.rect(screen, (48, 75, 119), (r.x+2, r.y+7, max(0,r.w-4), max(0,r.h-9)), border_radius=5)
+    pygame.draw.line(screen, (91, 230, 239), (r.x+7,r.y+2), (r.right-7,r.y+2), 3)
+    pygame.draw.line(screen, (52, 132, 189), (r.x+8,r.y+10), (r.right-8,r.y+10), 1)
+    for x in range(r.x+14, r.right-8, 32):
+        pygame.draw.line(screen, (43, 63, 101), (x, r.y+17), (x+8, r.bottom-5), 2)
+    for x in range(r.x+18, r.right-8, 70):
+        pygame.draw.circle(screen, (70, 172, 207), (x, r.y+4), 2)
 
 class Player:
     def __init__(self):
@@ -94,7 +123,11 @@ class Player:
         if self.invuln and self.invuln % 6 < 3:
             return
         pygame.draw.ellipse(screen, (8, 12, 27), (x-3, y+self.h-5, self.w+8, 10))
+        # Subtle magical aura and layered armor
+        pygame.draw.circle(screen, (27, 89, 160), (x+17, y+26), 25, 1)
         pygame.draw.rect(screen, (36, 63, 126), (x+5, y+19, 24, 24), border_radius=6)
+        pygame.draw.rect(screen, (52, 92, 166), (x+8, y+22, 18, 17), border_radius=4)
+        pygame.draw.polygon(screen, (98, 230, 255), [(x+17,y+22),(x+21,y+30),(x+17,y+35),(x+13,y+30)])
         pygame.draw.rect(screen, (81, 148, 242), (x+5, y+19, 24, 7), border_radius=3)
         pygame.draw.circle(screen, (241, 193, 150), (x+17, y+12), 11)
         pygame.draw.polygon(screen, (224, 239, 255), [(x+5,y+9),(x+11,y-1),(x+23,y-1),(x+29,y+9),(x+18,y+5)])
@@ -249,12 +282,25 @@ while running:
     draw_background(camera)
     for p in platforms: draw_platform(p, camera)
     portal_x = LEVEL_W - 80 - camera
-    pygame.draw.ellipse(screen, (42, 73, 145), (portal_x-25, 345, 64, 112), 4)
-    pygame.draw.ellipse(screen, CYAN, (portal_x-15, 355, 44, 92), 3)
+    pulse = 2 + int((pygame.time.get_ticks() // 180) % 3)
+    # Portal rings, core and drifting sparks
+    pygame.draw.ellipse(screen, (23, 49, 110), (portal_x-32, 338, 78, 126))
+    pygame.draw.ellipse(screen, (42, 73, 145), (portal_x-25, 345, 64, 112), 5)
+    pygame.draw.ellipse(screen, (73, 151, 255), (portal_x-20, 350, 54, 102), 2)
+    pygame.draw.ellipse(screen, CYAN, (portal_x-15, 355, 44, 92), pulse)
+    pygame.draw.ellipse(screen, (41, 100, 202), (portal_x-8, 364, 30, 74), 2)
+    for i in range(7):
+        sx = portal_x + int(math.sin(pygame.time.get_ticks()/350 + i)*25)
+        sy = 400 + int(math.cos(pygame.time.get_ticks()/420 + i)*42)
+        pygame.draw.circle(screen, (132, 241, 255), (sx, sy), 2)
     for gx, gy in gems:
         x = int(gx-camera)
-        pygame.draw.polygon(screen, GOLD, [(x,gy-12),(x+9,gy),(x,gy+12),(x-9,gy)])
-        pygame.draw.polygon(screen, (255,242,175), [(x,gy-8),(x+4,gy),(x,gy+5)])
+        bob = int(math.sin(pygame.time.get_ticks()/240 + gx)*3)
+        gy2 = gy + bob
+        pygame.draw.circle(screen, (103, 83, 31), (x, gy2), 17, 1)
+        pygame.draw.polygon(screen, (255, 164, 55), [(x,gy2-15),(x+11,gy2),(x,gy2+15),(x-11,gy2)])
+        pygame.draw.polygon(screen, GOLD, [(x,gy2-12),(x+8,gy2),(x,gy2+12),(x-8,gy2)])
+        pygame.draw.polygon(screen, (255,250,207), [(x,gy2-8),(x+3,gy2-1),(x,gy2+5)])
     for e in enemies: e.draw(camera)
     for b in bolts: b.draw(camera)
     player.draw(camera)
